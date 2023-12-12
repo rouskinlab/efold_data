@@ -4,7 +4,7 @@
 - [ ] Ribonanza
 - [ ] pri-mRNA
 - [ ] UTR
-- [ ] bpRNA
+- [x] bpRNA
 - [ ] archivII
 - [ ] RNAstralign
 
@@ -16,5 +16,5 @@
 
 ## Tools
  - [x] Adapt rouskinHF
- - [ ] Create a Google Drive for the raw data
+ - [x] Create a Google Drive for the raw data
  - [ ] Add seismic sample analysis to this repo
