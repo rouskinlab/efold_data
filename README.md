@@ -4,19 +4,20 @@
 - [ ] Ribonanza
 - [ ] pri-mRNA
 - [ ] UTR
-- [ ] bpRNA
-- [ ] archivII
-- [ ] RNAstralign
+- [x] bpRNA
+- [x] archivII
+- [x] RNAstralign
+- [x] Zuber
 
 ### Test sets
 - [x] Viral fragments
-- [ ] PDB
-- [ ] SARS2
-- [ ] Sarah Supermodels (rename this)
+- [x] PDB
+- [x] SARS2
+- [x] Human-mRNA
 
 ## Tools
  - [x] Adapt rouskinHF
- - [ ] Create a Google Drive for the raw data
+ - [x] Create a Google Drive for the raw data
  - [ ] Add seismic sample analysis to this repo
 
 
