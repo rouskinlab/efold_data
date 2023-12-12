@@ -3,17 +3,17 @@
 ### Train sets
 - [ ] Ribonanza
 - [ ] pri-mRNA
-- [x] UTR
+- [ ] UTR
 - [x] bpRNA
-- [ ] archivII
-- [ ] RNAstralign
+- [x] archivII
+- [x] RNAstralign
 - [x] Zuber
 
 ### Test sets
 - [x] Viral fragments
-- [ ] PDB
-- [ ] SARS2
-- [ ] Sarah Supermodels (rename this)
+- [x] PDB
+- [x] SARS2
+- [x] Human-mRNA
 
 ## Tools
  - [x] Adapt rouskinHF
