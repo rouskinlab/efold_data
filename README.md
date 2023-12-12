@@ -3,10 +3,11 @@
 ### Train sets
 - [ ] Ribonanza
 - [ ] pri-mRNA
-- [ ] UTR
+- [x] UTR
 - [x] bpRNA
 - [ ] archivII
 - [ ] RNAstralign
+- [x] Zuber
 
 ### Test sets
 - [x] Viral fragments
