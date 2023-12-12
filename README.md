@@ -15,6 +15,9 @@
 - [x] SARS2
 - [x] Human-mRNA
 
+### Data labelling
+- [x] Rfam
+
 ## Tools
  - [x] Adapt rouskinHF
  - [x] Create a Google Drive for the raw data
