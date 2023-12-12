@@ -1,7 +1,7 @@
 # Data for the supermodels project
 ## Data
 ### Train sets
-- [ ] Ribonanza
+- [x] Ribonanza
 - [ ] pri-mRNA
 - [ ] UTR
 - [x] bpRNA
