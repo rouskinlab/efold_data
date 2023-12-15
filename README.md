@@ -1,7 +1,7 @@
 # Data for the supermodels project
 ## Data
 ### Train sets
-- [ ] Ribonanza
+- [x] Ribonanza
 - [ ] pri-mRNA
 - [ ] UTR
 - [x] bpRNA
@@ -14,6 +14,9 @@
 - [x] PDB
 - [x] SARS2
 - [x] Human-mRNA
+
+### Data labelling
+- [x] Rfam
 
 ## Tools
  - [x] Adapt rouskinHF
