@@ -9,6 +9,8 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from seismic2dreem.dump import dump_json
 
+from datetime import datetime
+
 UKN = -1000
 
 dirname = os.path.dirname(__file__)
@@ -683,18 +685,22 @@ def plot_dms_signal(normalized_df, output_path):
         fig.write_image(os.path.join(output_path, f'Plate_{plate}-ref_{row["reference"]}.png'), width=1000, height=500, scale=2)
     
     
-def dump_df_to_dreem_format(seismic_df, name, path='.'):
+def dump_df_to_dreem_format(seismic_df, name, path='.', metadata=None):
 
     if not os.path.exists(path):
         os.makedirs(path)
 
-    out= {'sample': name}
+    if metadata is None:
+        metadata = {}
+
+    out= {**{'#Sample': name, '#Date' : datetime.today().strftime('%Y-%m-%d')}, 
+            **metadata}
     for plate, df in seismic_df.groupby('plate'):
         plate = str(plate)
         for ref, df2 in df.groupby('reference'):   
             assert len(df2) == 1, 'More than one row for sample {} and reference {}'.format(plate, ref)
             df2 = df2.iloc[0]
-            out[ref] = {'samples': df2['sample'], 'plate': plate}
+            out[ref] = {'#samples': df2['sample'], '#plate': plate}
             out[ref]['full'] = {'sequence': df2['sequence']}
             out[ref]['full']['pop_avg'] = {
                 'cov': df2['coverage'],
