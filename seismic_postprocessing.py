@@ -609,7 +609,9 @@ def plot_signal_histogram(filtered_df):
     fig.show()
 
 
-def plot_correlations_per_plate(combined_df, mode):
+def plot_correlations_per_plate(combined_df, mode='r2'):
+    assert mode in ['correlation', 'r2'], 'mode should be either correlation or r2'
+    
     plates = sorted(combined_df['plate'].unique().tolist())
 
     fig = make_subplots(rows=len(plates), cols=1, subplot_titles=[f'Plate {plate} | mean {mode} {np.mean(combined_df[combined_df["plate"]==plate][mode]):.2f}' for plate in plates])
