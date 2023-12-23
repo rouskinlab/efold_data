@@ -19,7 +19,7 @@ import torch
 
 '''
 
-def fragment_RNA(sequence, paired_bases, signal, name, min_length=100, min_unpaired_length=10, min_auroc=0.8):
+def fragment_RNA(sequence, paired_bases, signal, name, data_type, min_length=100, min_unpaired_length=10, min_auroc=0.8):
 
     paired_bases = np.array(paired_bases)
     signal = np.array(signal)
@@ -69,19 +69,25 @@ def fragment_RNA(sequence, paired_bases, signal, name, min_length=100, min_unpai
             and len_nonPaired_regions[i] > min_unpaired_length):
 
             dms_window = signal[idx_start+1:cut_points[i]]
-            auroc = roc_auc_score(isUnpaired[idx_start+1:cut_points[i]][dms_window!=UKN], dms_window[dms_window!=UKN])
+            pair_window = isUnpaired[idx_start+1:cut_points[i]][dms_window!=UKN]
+            if len(np.unique(pair_window))==2:
+                auroc = roc_auc_score(pair_window, dms_window[dms_window!=UKN])
+                # print(auroc)
 
-            if auroc>min_auroc:
-                cut_idxs.append(cut_points[i])
-                idx_start = cut_points[i]
+                if auroc>min_auroc:
+                    cut_idxs.append(cut_points[i])
+                    idx_start = cut_points[i]
     
     # Last segment
     if len(signal) - cut_points[-1] > min_length:
         dms_window = signal[cut_points[-1]+1:]
-        auroc = roc_auc_score(isUnpaired[cut_points[-1]+1:][dms_window!=UKN], dms_window[dms_window!=UKN])
+        pair_window = isUnpaired[cut_points[-1]+1:][dms_window!=UKN]
 
-        if auroc>min_auroc:
-            cut_idxs.append(len(signal))
+        if len(np.unique(pair_window))==2:
+            auroc = roc_auc_score(pair_window, dms_window[dms_window!=UKN])
+
+            if auroc>min_auroc:
+                cut_idxs.append(len(signal))
 
     ## Output dataframe
     data_struct = {}
@@ -91,7 +97,7 @@ def fragment_RNA(sequence, paired_bases, signal, name, min_length=100, min_unpai
         sub_seq = sequence[start_idx+1:end_idx+1]
         sub_dms = signal[start_idx+1:end_idx+1]
 
-        data_struct[name+'_'+str(i)] = {'sequence': sub_seq, 'dms': sub_dms.tolist()}
+        data_struct[name+'_'+str(i)] = {'sequence': sub_seq, data_type: sub_dms.tolist()}
         start_idx = end_idx
 
     return pd.DataFrame(data_struct).T
@@ -127,6 +133,7 @@ def compare_frags(sequences, signals, paired_bases, min_f1=0.9, name='', min_len
 
 
     best_i = np.argmax([len(idx_to_keep[i]) for i in range(len(sequences))])
+    print('Best fragment: ', best_i)
     return frag_dfs[best_i].loc[idx_to_keep[best_i]]
 
 
