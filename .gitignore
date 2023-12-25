@@ -1,3 +1,12 @@
 data
 .env
 data.json
+README.md
+.DS_Store
+launch.json
+db
+temp
+*.json
+*.csv
+
+
