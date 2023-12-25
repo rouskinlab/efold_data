@@ -1,6 +1,7 @@
 data
 .env
 data.json
+<<<<<<< HEAD
 README.md
 .DS_Store
 launch.json
@@ -8,5 +9,5 @@ db
 temp
 *.json
 *.csv
-
-
+*.pyc
+.vscode/*
