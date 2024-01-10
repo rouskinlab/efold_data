@@ -566,19 +566,15 @@ def normalize_dms(filtered_df, percentile:float=95):
 
     normalized_df = filtered_df.copy()
 
-    for sample in normalized_df['sample'].unique():
+    for i, row in normalized_df.iterrows():
+        
+        new_dms = np.array(row['sub_rate'])
+        new_dms_AC = new_dms[new_dms!=UKN]
+        max_dms = np.median(new_dms_AC[new_dms_AC>=np.percentile(new_dms_AC, percentile)])
 
-        sample_df = normalized_df[normalized_df['sample']==sample]
-
-        all_dms = np.concatenate(sample_df['sub_rate'].tolist())
-        all_dms = all_dms[all_dms != UKN]
-        max_dms = np.median(all_dms[all_dms>np.percentile(all_dms, percentile)])
-
-        for idx in sample_df.index:
-            new_dms = np.array(normalized_df.at[idx, 'sub_rate'])
-            new_dms[new_dms!=UKN] = new_dms[new_dms!=UKN]/max_dms
-            new_dms[new_dms>1] = 1
-            normalized_df.at[idx, 'sub_rate'] = new_dms.tolist()
+        new_dms[new_dms!=UKN] = new_dms[new_dms!=UKN]/max_dms
+        new_dms[new_dms>1] = 1
+        normalized_df.at[i, 'sub_rate'] = new_dms.tolist()
 
     return normalized_df
 
