@@ -14,7 +14,7 @@
 ### Test sets
 - Viral fragments
 - PDB
-- Human-mRNA
+- lncRNA
 
 ### Data labelling
 - Rfam
