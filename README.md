@@ -1,13 +1,15 @@
 # Data for the supermodels project
 ## Data
-### Train sets
+### Pre-training sets
 - [x] Ribonanza
-- [ ] pri-mRNA
-- [ ] UTR
 - [x] bpRNA
-- [x] archivII
 - [x] RNAstralign
 - [x] Zuber
+
+### Fine-tuning sets
+- [x] pri-mRNA
+- [x] UTR (now human mRNA)
+- [x] archivII
 
 ### Test sets
 - [x] Viral fragments
@@ -21,7 +23,7 @@
 ## Tools
  - [x] Adapt rouskinHF
  - [x] Create a Google Drive for the raw data
- - [ ] Add seismic sample analysis to this repo
+ - [x] Add seismic sample analysis to this repo
 
 
  [Link google drive](https://drive.google.com/drive/folders/1pKUBGlvcft4WsUSztaUCOXcyGi9a8NUy)
