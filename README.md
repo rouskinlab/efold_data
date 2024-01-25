@@ -1,27 +1,25 @@
 # Data for the supermodels project
 ## Data
-### Train sets
-- [x] Ribonanza
-- [ ] pri-mRNA
-- [ ] UTR
-- [x] bpRNA
-- [x] archivII
-- [x] RNAstralign
-- [x] Zuber
+### Pre-training sets
+- Ribonanza
+- bpRNA
+- RNAstralign
+- Zuber
+
+### Fine-tuning sets
+- pri-mRNA
+- human mRNA
+- archiveII
 
 ### Test sets
-- [x] Viral fragments
-- [x] PDB
-- [x] SARS2
-- [x] Human-mRNA
+- Viral fragments
+- PDB
+- lncRNA
 
 ### Data labelling
-- [x] Rfam
+- Rfam
 
-## Tools
- - [x] Adapt rouskinHF
- - [x] Create a Google Drive for the raw data
- - [ ] Add seismic sample analysis to this repo
+## Notes
+- all of the raw data in on [this google drive](https://drive.google.com/drive/folders/1pKUBGlvcft4WsUSztaUCOXcyGi9a8NUy)
+- the normalisation, filtering and replicates matching of SEISMIC data is made using `seismic__postprocessing.py`
 
-
- [Link google drive](https://drive.google.com/drive/folders/1pKUBGlvcft4WsUSztaUCOXcyGi9a8NUy)
