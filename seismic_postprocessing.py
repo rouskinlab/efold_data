@@ -571,6 +571,9 @@ def normalize_dms(filtered_df, percentile:float=95):
         new_dms = np.array(row['sub_rate'])
         new_dms_AC = new_dms[new_dms!=UKN]
         max_dms = np.median(new_dms_AC[new_dms_AC>=np.percentile(new_dms_AC, percentile)])
+        
+        if max_dms == 0: max_dms = np.max(new_dms_AC)
+        if max_dms == 0: max_dms = 1
 
         new_dms[new_dms!=UKN] = new_dms[new_dms!=UKN]/max_dms
         new_dms[new_dms>1] = 1
