@@ -69,9 +69,9 @@ def fragment_RNA(sequence, paired_bases, signal, name, data_type, min_length=100
             and len_nonPaired_regions[i] > min_unpaired_length):
 
             dms_window = signal[idx_start+1:cut_points[i]]
-            pair_window = isUnpaired[idx_start+1:cut_points[i]][dms_window!=UKN]
+            pair_window = isUnpaired[idx_start+1:cut_points[i]][dms_window>=0]
             if len(np.unique(pair_window))==2:
-                auroc = roc_auc_score(pair_window, dms_window[dms_window!=UKN])
+                auroc = roc_auc_score(pair_window, dms_window[dms_window>=0])
                 # print(auroc)
 
                 if auroc>min_auroc:
@@ -79,12 +79,12 @@ def fragment_RNA(sequence, paired_bases, signal, name, data_type, min_length=100
                     idx_start = cut_points[i]
     
     # Last segment
-    if len(signal) - cut_points[-1] > min_length:
+    if len(signal) - idx_start > min_length:
         dms_window = signal[cut_points[-1]+1:]
-        pair_window = isUnpaired[cut_points[-1]+1:][dms_window!=UKN]
+        pair_window = isUnpaired[cut_points[-1]+1:][dms_window>=0]
 
         if len(np.unique(pair_window))==2:
-            auroc = roc_auc_score(pair_window, dms_window[dms_window!=UKN])
+            auroc = roc_auc_score(pair_window, dms_window[dms_window>=0])
 
             if auroc>min_auroc:
                 cut_idxs.append(len(signal))
@@ -96,8 +96,9 @@ def fragment_RNA(sequence, paired_bases, signal, name, data_type, min_length=100
 
         sub_seq = sequence[start_idx+1:end_idx+1]
         sub_dms = signal[start_idx+1:end_idx+1]
+        sub_struct = dot[start_idx+1:end_idx+1]
 
-        data_struct[name+'_'+str(i)] = {'sequence': sub_seq, data_type: sub_dms.tolist()}
+        data_struct[name+'_'+str(i)] = {'sequence': sub_seq, data_type: sub_dms.tolist(), 'structure': sub_struct}
         start_idx = end_idx
 
     return pd.DataFrame(data_struct).T
