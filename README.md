@@ -1,6 +1,8 @@
 # eFold training data
 
-| Training stage   | Name on HuggingFace   | Source                     | Method                          | Number of sequences   | Families                      | L ∈ [10, 199]   | L ∈ [200, 499]   | L ∈ [500, 999]   | L ∈ [1000, 1999]   |   L ∈ [2000, inf] |
+Here's a breakdown of the data we used to train eFold.
+
+| Training stage   | Name on HuggingFace   | Source                     | Method                          | Number of sequences we used   | Families                      | L ∈ [10, 199]   | L ∈ [200, 499]   | L ∈ [500, 999]   | L ∈ [1000, 1999]   |   L ∈ [2000, inf] |
 |:-----------------------|:----------------------|:---------------------------|:--------------------------------|:----------------------|:------------------------------|:----------------|:-----------------|:-----------------|:-------------------|------------------:|
 | Pre-training     | rnacentral_synthetic  | Sequences from RNA central | RNAstructure                    | 226'729               | All known families            | 176'486         | 49'463           | 780              | 0                  |                 0 |
 | Pre-training     | ribo500-blast         | Ribonanza Competition      | RNAstructure + DMS and/or SHAPE | 46'060                | Unlabelled                    | 46'049          | 11               | 0                | 0                  |                 0 |
