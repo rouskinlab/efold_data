@@ -3,18 +3,18 @@
 ### Pre-training sets
 - Ribonanza
 - bpRNA
-- RNAstralign
 - Zuber
+- RNAcentral (synthetic)
 
 ### Fine-tuning sets
 - pri-mRNA
 - human mRNA
-- archiveII
 
 ### Test sets
 - Viral fragments
 - PDB
 - lncRNA
+- ArchiveII
 
 ### Data labelling
 - Rfam
