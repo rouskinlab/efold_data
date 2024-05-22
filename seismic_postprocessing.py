@@ -8,6 +8,7 @@ from sklearn.metrics import r2_score
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from seismic2dreem.dump import dump_json
+import tqdm
 
 from datetime import datetime
 
@@ -178,12 +179,13 @@ def read_seismic_output(output_path: str, min_cov=1000, ref2plate: dict=None):
     ## Import from Seismic directly
 
     # Parse output file to find mask-per-pose.csv files in output_path/table
-    seismic_df = pd.DataFrame(columns=['sample', 'reference', 'plate', 'replicate', 'sequence', 'sub_rate', 'coverage', 'sub_A', 'sub_C', 'sub_G', 'sub_T', 'n_reads'])
+    #seismic_df = pd.DataFrame(columns=['sample', 'reference', 'plate', 'replicate', 'sequence', 'sub_rate', 'coverage', 'sub_A', 'sub_C', 'sub_G', 'sub_T', 'n_reads'])
+    lines = []
     n_references = 0
 
     # Go over all seismic output
     table_path = os.path.join(output_path, 'table')
-    for sample_name in os.listdir(table_path):
+    for sample_name in tqdm.tqdm(os.listdir(table_path), desc='Samples', total=len(os.listdir(table_path))):
         sample_path = os.path.join(table_path, sample_name)
         if not os.path.isdir(sample_path):
             continue
@@ -200,7 +202,7 @@ def read_seismic_output(output_path: str, min_cov=1000, ref2plate: dict=None):
                 replicates.append(s.split('1-5_')[1].split('_')[1])
 
         # Go through all references       
-        for ref_name in os.listdir(sample_path):
+        for ref_name in tqdm.tqdm(os.listdir(sample_path), desc="Reading through sample {}".format(sample_name), total=len(os.listdir(sample_path))):
             ref_path = os.path.join(sample_path, ref_name, 'full')
             if not os.path.isdir(ref_path):
                 continue
@@ -236,16 +238,32 @@ def read_seismic_output(output_path: str, min_cov=1000, ref2plate: dict=None):
                         plate = n_plates[0] if ref2plate is None else ref2plate[ref_name]+1
 
                         # Save to seismic_df
-                        seismic_df.loc[len(seismic_df)] = [ sample_name, ref_name, 
-                                                            plate, replicate,
-                                                            ''.join(df['Base'].tolist()), 
-                                                            sub_rate['Mutated'].tolist(), 
-                                                            coverage.tolist(), 
-                                                            sub_rate['Subbed-A'].tolist(),
-                                                            sub_rate['Subbed-C'].tolist(),
-                                                            sub_rate['Subbed-G'].tolist(),
-                                                            sub_rate['Subbed-T'].tolist(),
-                                                            n_reads]
+                        # lines.append([ sample_name, ref_name, 
+                        #                                     plate, replicate,
+                        #                                     ''.join(df['Base'].tolist()), 
+                        #                                     sub_rate['Mutated'].tolist(), 
+                        #                                     coverage.tolist(), 
+                        #                                     sub_rate['Subbed-A'].tolist(),
+                        #                                     sub_rate['Subbed-C'].tolist(),
+                        #                                     sub_rate['Subbed-G'].tolist(),
+                        #                                     sub_rate['Subbed-T'].tolist(),
+                        #                                     n_reads])
+                        lines.append({
+                            'sample': sample_name,
+                            'reference': ref_name,
+                            'plate': plate,
+                            'replicate': replicate,
+                            'sequence': ''.join(df['Base'].tolist()),
+                            'sub_rate': sub_rate['Mutated'].tolist(),
+                            'coverage': coverage.tolist(),
+                            'sub_A': sub_rate['Subbed-A'].tolist(),
+                            'sub_C': sub_rate['Subbed-C'].tolist(),
+                            'sub_G': sub_rate['Subbed-G'].tolist(),
+                            'sub_T': sub_rate['Subbed-T'].tolist(),
+                            'n_reads': n_reads
+                        })
+                        
+    seismic_df = pd.DataFrame(lines)
 
     # Duplicate checks
     # assert seismic_df.duplicated(subset=['reference']).sum() == seismic_df.duplicated(subset=['sequence']).sum(), 'There are duplicated sequences or references'
@@ -591,7 +609,8 @@ def plot_signal_histogram(filtered_df):
 
     for i, plate in enumerate(plates):
         plate_df = filtered_df[filtered_df['plate']==plate]
-
+        if not len(plate_df[plate_df['replicate']!='Untreated']):
+            continue
         treated_signal = np.concatenate(plate_df[plate_df['replicate']!='Untreated']['sub_rate'].values)
         treated_signal = treated_signal[treated_signal!=UKN]
         fig.add_trace(go.Histogram(x=treated_signal[treated_signal<np.mean(treated_signal)+5*np.std(treated_signal)], 
