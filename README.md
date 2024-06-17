@@ -15,5 +15,6 @@ Here's a breakdown of the data we used to train eFold.
 | Testing          | archiveII_blast       | Archive II                 | Covariance analysis             | 355                   | rRNA, tRNA, tmRNA, unlabelled | 242             | 65               | 43               | 5                  |                 0 |
 
 ## Notes
+- the processed data in on [Hugging Face](https://huggingface.co/rouskinlab)
 - all of the raw data in on [this google drive](https://drive.google.com/drive/folders/1pKUBGlvcft4WsUSztaUCOXcyGi9a8NUy)
 - the normalisation, filtering and replicates matching of SEISMIC data is made using `seismic__postprocessing.py`
