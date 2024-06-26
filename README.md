@@ -1,6 +1,6 @@
 # eFold training data
 
-Here's a breakdown of the data we used to train eFold.
+Here's a breakdown of the data we used to train eFold. You can find these datasets on  [Hugging Face](https://huggingface.co/rouskinlab). The raw data in on [this google drive](https://drive.google.com/drive/folders/1pKUBGlvcft4WsUSztaUCOXcyGi9a8NUy). 
 
 | Training stage   | Name on HuggingFace   | Source                     | Method                          | Number of sequences   | Families                      | length [10, 199]   | length [200, 499]   | length [500, 999]   | length [1000, 1999]   |   length [2000, inf] |
 |:-----------------|:----------------------|:---------------------------|:--------------------------------|:----------------------|:------------------------------|:-------------------|:--------------------|:--------------------|:----------------------|---------------------:|
@@ -15,6 +15,5 @@ Here's a breakdown of the data we used to train eFold.
 | Testing          | archiveII             | Archive II                 | Covariance analysis             | 3'370                 | rRNA, tRNA, tmRNA, unlabelled | 2'004              | 1'276               | 79                  | 11                    |                    0 |
 
 ## Notes
-- the processed data in on [Hugging Face](https://huggingface.co/rouskinlab)
-- all of the raw data in on [this google drive](https://drive.google.com/drive/folders/1pKUBGlvcft4WsUSztaUCOXcyGi9a8NUy)
-- the normalisation, filtering and replicates matching of SEISMIC data is made using `seismic__postprocessing.py`
+
+The normalisation, filtering and replicates matching of SEISMIC data is made using `seismic__postprocessing.py`.
